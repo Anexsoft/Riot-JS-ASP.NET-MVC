@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div id="list"></div>
+
+<user-modal></user-modal>
+<script src="~/component?c=EmpleadoModal" type="riot/tag"></script>
+
+@section scripts{
+<script>
+    var data = {
+        class: 'table-striped table-bordered table-condensed',
+        columnas: [
+            { leyenda: '', style: {width:'40px'}, class: 'text-center' },
+            {
+                leyenda: 'Profesión', style: 'width:200px;', columna: 'Profesion_id', ordenable: true, filtro: function () {
+                    return anexGrid_select({
+                        data: [
+                            { valor: '', contenido: 'Todos' },
+                            { valor: '1', contenido: 'Abogado' },
+                            { valor: '2', contenido: 'Bombero' },
+                            { valor: '3', contenido: 'Doctor' },
+                            { valor: '4', contenido: 'Ingeniero Civil' },
+                            { valor: '5', contenido: 'Ingeniero de Sistemas' },
+                            { valor: '6', contenido: 'Músico' },
+                        ]
+                    });
+                }
+            },
+            { leyenda: 'Empleado', class: '', ordenable: true, columna: 'Nombre', filtro: true },
+            { leyenda: 'Correo', style: 'width:300px;', ordenable: true, filtro: true, columna: 'Correo' },
+            {
+                leyenda: 'Sexo', style: 'width:120px;', columna: 'Sexo', filtro: function () {
+                    return anexGrid_select({
+                        data: [
+                            { valor: '', contenido: 'Todos' },
+                            { valor: '1', contenido: 'Masculino' },
+                            { valor: '2', contenido: 'Femenino' },
+                        ]
+                    });
+                }
+            },
+            { leyenda: 'Sueldo', style: 'width:100px;', ordenable: true, columna: 'Sueldo' },
+            { leyenda: 'Registro', style: 'width:100px;', ordenable: true, columna: 'FechaRegistro' },
+            { leyenda: '', style: 'width:60px;' },
+        ],
+        modelo: [
+            {
+                class: 'text-center', formato: function (tr, obj, valor) {
+                    return anexGrid_dropdown({
+                        contenido: '<i class="glyphicon glyphicon-cog"></i>',
+                        class: 'btn btn-primary btn-xs',
+                        target: '_blank',
+                        id: 'editar-' + obj.id,
+                        data: [
+                            { href: '#', contenido: 'Editar' },
+                            { href: '#', contenido: 'Eliminar' }
+                        ]
+                    });
+                }
+            },
+            { propiedad: 'Profesion.Nombre' },
+            {
+                style: '', class: '', formato: function (tr, obj, valor) {
+                    return obj.Nombre + ' ' + obj.Apellido;
+                }
+            },
+            { propiedad: 'Correo' },
+            {
+                propiedad: 'Sexo', formato: function (tr, obj, valor) {
+                    return obj.Sexo == 1 ? 'Masculino' : 'Femenino';
+                }
+            },
+            { propiedad: 'Sueldo', class: 'text-right', },
+            { propiedad: 'FechaRegistro', class: 'text-right', },
+            {
+                propiedad: 'Sexo', formato: function (tr, obj, valor) {
+                    return anexGrid_boton({
+                        type: 'button',
+                        value: obj.id,
+                        contenido: 'Ver',
+                        class: 'btn-default btn-block btn-xs btn-visualizar'
+                    });
+                }
+            },
+        ],
+        url: '@Url.Content("~/default/listar")',
+        paginable: true,
+        filtrable: true,
+        limite: [20, 60, 100],
+        columna: 'id',
+        columna_orden: 'DESC'
+    };
+
+    $(document).ready(function () {
+        var grid = $("#list").anexGrid(data);
+
+        $("#list").on('click', '.btn-visualizar', function () {
+            var obj = $(this);
+
+            riot.mount('user-modal', {
+                id: obj.val()
+            });
+        })
+    })
+</script>
+}
+

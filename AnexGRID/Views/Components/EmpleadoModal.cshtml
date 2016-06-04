@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+
+<user-modal>
+    <div id="user-modal-tag" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div if={ready} class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{model.Apellido}, {model.Nombre}</h4>
+                </div>
+                <div class="modal-body">
+                    <div if={!ready} class="text-center">
+                        Cargando, espere un momento por favor ...
+                    </div>
+                    <div if={ready} class="media">
+                        <dl>
+                            <dt>Nombre</dt>
+                            <dd>{model.Apellido} {model.Nombre}</dd>
+                            <dt>Correo</dt>
+                            <dd>{model.Correo}</dd>
+                            <dt>Fecha nacimiento</dt>
+                            <dd>{model.FechaNacimiento}</dd>
+                            <dt>Profesion</dt>
+                            <dd>{model.Profesion}</dd>
+                            <dt>Sueldo</dt>
+                            <dd>{model.Sueldo}</dd>
+                            <dt>Sexo</dt>
+                            <dd>{model.SexoView}</dd>
+                        </dl>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" onkeyup={cuentaCaracteres} />
+                            <span>Caracteres usados: {caracteres}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var self = this;
+        self.ready = false;
+        self.caracteres = 0;
+
+        cuentaCaracteres(e){
+            var inputLength = e.target.value.length;
+
+            if(inputLength > 20) self.caracteres = 'Excedido ..'
+            else self.caracteres = inputLength;
+        }
+
+        this.on('mount', function () {
+            $("#user-modal-tag").modal();
+
+            $.post('@Url.Content("~/default/obtener/")' + self.opts.id, function (r) {
+                self.model = r;
+
+                self.model.SexoView = r.Sexo === 1 ? 'Hombre' : 'Mujer';
+
+                self.ready = true;
+                self.update();
+            }, 'json');
+        })
+    </script>
+
+</user-modal>
