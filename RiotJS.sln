@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnexGRID", "AnexGRID\AnexGRID.csproj", "{FFB7DF6F-9626-4768-BEB4-D1C37C91B45D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotJS", "RiotJs\RiotJS.csproj", "{FFB7DF6F-9626-4768-BEB4-D1C37C91B45D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{19E3C2F1-942B-495B-9324-567636031F85}"
 EndProject

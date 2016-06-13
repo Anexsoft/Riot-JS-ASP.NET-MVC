@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnexGRID.cs" />
-    <Compile Include="AnexGRIDContext.cs" />
+    <Compile Include="DatabaseContext.cs" />
     <Compile Include="Empleado.cs" />
     <Compile Include="Profesion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

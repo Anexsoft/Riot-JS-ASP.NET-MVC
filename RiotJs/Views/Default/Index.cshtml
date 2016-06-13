@@ -3,12 +3,22 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="page-header">
+    <button id="empleado-bulk" class="pull-right btn btn-default">
+        <i class="glyphicon glyphicon-user"></i>
+        Registrar empleados
+    </button>
+
+    Index
+</h2>
 
 <div id="list"></div>
 
 <user-modal></user-modal>
+<user-bulk-modal></user-bulk-modal>
+
 <script src="~/component?c=EmpleadoModal" type="riot/tag"></script>
+<script src="~/component?c=EmpleadoBulk" type="riot/tag"></script>
 
 @section scripts{
 <script>
@@ -105,6 +115,10 @@
             riot.mount('user-modal', {
                 id: obj.val()
             });
+        })
+
+        $("#empleado-bulk").click(function () {
+            riot.mount('user-bulk-modal');
         })
     })
 </script>

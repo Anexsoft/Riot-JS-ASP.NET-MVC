@@ -44,7 +44,7 @@ namespace Model
         {
             try
             {
-                using (var ctx = new AnexGRIDContext()) 
+                using (var ctx = new DatabaseContext()) 
                 {
                     agrid.Inicializar();
 
@@ -132,7 +132,7 @@ namespace Model
 
             try
             {
-                using (var ctx = new AnexGRIDContext())
+                using (var ctx = new DatabaseContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     model = ctx.Empleado.Where(x => x.id == id).Include(x => x.Profesion)
@@ -155,6 +155,19 @@ namespace Model
             }
 
             return model;
+        }
+
+        public void Registrar(List<Empleado> model)
+        {
+            using (var ctx = new DatabaseContext())
+            {
+                foreach (var m in model) {
+                    m.FechaRegistro = DateTime.Now.ToString("yyyy-MM-dd");
+                    ctx.Entry(m).State = EntityState.Added;
+                }
+
+                ctx.SaveChanges();
+            }
         }
     }
 

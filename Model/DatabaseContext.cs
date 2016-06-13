@@ -5,9 +5,9 @@ namespace Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class AnexGRIDContext : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public AnexGRIDContext()
+        public DatabaseContext()
             : base("name=AnexGRIDContext")
         {
         }

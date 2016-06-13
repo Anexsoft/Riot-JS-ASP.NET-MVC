@@ -1,0 +1,165 @@
+﻿@model Empleado
+@{
+    Layout = null;
+}
+
+<user-bulk-modal>
+    <style>
+        .modal-lg {
+            width: 900px;
+        }
+        .scroll {
+            max-height:1000px;
+            overflow:scroll;
+            overflow-x:hidden;  
+        }
+    </style>
+
+    <div id="user-bulk-modal-tag" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div if={ready} class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registro masivo de empleados</h4>
+                </div>
+                <div class="modal-body">
+                    <div if={ready} class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Profesión</label>
+                                <select id="Profesion" class="form-control">
+                                    <option each={ profesiones } value="{id}">{Nombre}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                @Html.TextBoxFor(x => x.Apellido, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Nacimiento</label>
+                                @Html.TextBoxFor(x => x.FechaNacimiento, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sexo</label>
+                                <select id="Sexo" name="Sexo" class="form-control">
+                                    <option value="1" selected>Hombre</option>
+                                    <option value="0">Mujer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo</label>
+                                @Html.TextBoxFor(x => x.Correo, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sueldo</label>
+                                @Html.TextBoxFor(x => x.Sueldo, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default btn-block" type="button" onclick={agregarEmpleado}>Agregar +</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <ul class="list-group">
+                                <li class="list-group-item" each={data}>
+                                    <ul class="list-unstyled scroll">
+                                        <li>
+                                            <b>{Nombre}</b>
+                                        </li>
+                                        <li><b>Sexo</b>: {SexoView}</li>
+                                        <li><b>Profesión</b>: {ProfesionView}</li>
+                                        <li><b>Sueldo</b>: S/. {Sueldo}</li>
+                                        <li><hr /></li>
+                                        <li>
+                                            <button onclick={retirarEmpleado} class="btn btn-danger btn-block" type="button" value="0">Retirar</button>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="list-group-item" if={data.length === 0}>
+                                    No se han cargado empleados
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div if={!ready} class="text-center">
+                        Cargando, espere un momento por favor ...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button if={ready && data.length > 0} onclick={guardar} type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var self = this;
+        self.ready = false;
+        self.profesiones = [];
+        self.data = [];
+
+        agregarEmpleado(){
+            var nombre = $("#Nombre"),
+                apellido = $("#Apellido"),
+                sexo = $("#Sexo"),
+                profesion = $("#Profesion"),
+                sueldo = $("#Sueldo"),
+                correo = $("#Correo"),
+                nacimiento = $("#FechaNacimiento");
+
+            self.data.push({
+                Nombre: nombre.val(),
+                Apellido: apellido.val(),
+                Sexo: sexo.val(),
+                SexoView: sexo.find('option:selected').text(),
+                Profesion_id: profesion.val(),
+                ProfesionView: profesion.find('option:selected').text(),
+                Sueldo: sueldo.val(),
+                Correo: correo.val(),
+                FechaNacimiento: nacimiento.val(),
+            });
+
+            // Limpiar formulario
+            nombre.val('');
+            apellido.val('');
+            sexo.val('1');
+            profesion.val('1');
+            sueldo.val('');
+            correo.val('');
+            nacimiento.val('');
+        }
+
+        retirarEmpleado(e){
+            var item = e.item;
+            var index = self.data.indexOf(item);
+            self.data.splice(index, 1);
+        }
+
+        function cargarProfesiones(){
+            $.post('@Url.Content("~/default/profesiones")', function(r){
+                self.profesiones = r;
+                self.ready = true;
+
+                self.update();
+            }, 'json');
+        }
+
+        cargarProfesiones();
+
+        guardar(){
+            console.log(self.data);
+            $.post('@Url.Content("~/default/registrar")', { model: self.data}, function(r){
+                window.location.reload(true);
+            }, 'json');
+        }
+
+        this.on('mount', function () {
+            $("#user-bulk-modal-tag").modal();
+        })
+    </script>
+
+</user-bulk-modal>

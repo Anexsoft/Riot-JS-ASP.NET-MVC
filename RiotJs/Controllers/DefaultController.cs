@@ -10,6 +10,7 @@ namespace AnexGRID.Controllers
     public class DefaultController : Controller
     {
         private Empleado empleado = new Empleado();
+        private Profesion profesion = new Profesion();
 
         public ActionResult Index()
         {
@@ -24,6 +25,26 @@ namespace AnexGRID.Controllers
         public JsonResult Listar(Model.AnexGRID agrid)
         {
             return Json(empleado.Listar(agrid), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Profesiones()
+        {
+            return Json(profesion.Todo(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Registrar(List<Empleado> model)
+        {
+            var r = true;
+
+            try {
+                empleado.Registrar(model);
+            }
+            catch (Exception e)
+            {
+                r = false;
+            }
+
+            return Json(r);
         }
     }
 }

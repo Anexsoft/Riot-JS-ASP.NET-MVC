@@ -25,3 +25,12 @@ C:\Users\hitog\Desktop\riotjs\Model\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\hitog\Desktop\riotjs\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 C:\Users\hitog\Desktop\riotjs\Model\obj\Debug\Model.dll
 C:\Users\hitog\Desktop\riotjs\Model\obj\Debug\Model.pdb
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\Model.dll
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\Model.pdb
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\EntityFramework.dll
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\EntityFramework.xml
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\obj\Debug\Model.dll
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\obj\Debug\Model.pdb
+D:\Mi Trabajo\Tutoriales\asp.net-mvc\Riot-JS\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

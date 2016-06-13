@@ -1,10 +1,9 @@
 namespace Model
 {
-    using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Profesion")]
     public partial class Profesion
@@ -21,5 +20,13 @@ namespace Model
         public string Nombre { get; set; }
 
         public ICollection<Empleado> Empleado { get; set; }
+
+        public List<Profesion> Todo()
+        {
+            using (var ctx = new DatabaseContext())
+            {
+                return ctx.Profesion.OrderBy(x => x.Nombre).ToList();
+            }
+        }
     }
 }
